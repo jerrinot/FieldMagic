@@ -30,7 +30,7 @@ public class Example {
 ```
 
 ### Known Issues ###
-* Primitive values cannot be extracted. That's no. 1 item of in my TODO list
+* Primitive values cannot be extracted. That's no. 1 item in my TODO list
 * Error-handling is virtually non-existing
 * Poor test coverage
 
