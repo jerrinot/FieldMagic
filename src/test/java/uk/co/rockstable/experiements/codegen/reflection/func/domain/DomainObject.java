@@ -4,14 +4,14 @@ public class DomainObject {
     private final String name;
     private final int id;
 
-    public boolean _boolean = true;
-    public char _char = Character.MAX_VALUE;
-    public byte _byte = Byte.MAX_VALUE;
-    public short _short = Short.MAX_VALUE;
-    public int _int = Integer.MAX_VALUE;
-    public long _long = Long.MAX_VALUE;
-    public float _float = Float.MAX_VALUE;
-    public double _double = Double.MAX_VALUE;
+    private boolean _boolean = true;
+    private char _char = Character.MAX_VALUE;
+    private byte _byte = Byte.MAX_VALUE;
+    private short _short = Short.MAX_VALUE;
+    private int _int = Integer.MAX_VALUE;
+    private long _long = Long.MAX_VALUE;
+    private float _float = Float.MAX_VALUE;
+    private double _double = Double.MAX_VALUE;
 
     public int[] primitiveIntArray = new int[0];
     public Integer[] integerArray = new Integer[0];
