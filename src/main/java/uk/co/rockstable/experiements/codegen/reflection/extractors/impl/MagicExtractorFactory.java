@@ -56,15 +56,8 @@ public class MagicExtractorFactory extends ExtractorFactory {
                 null, "sun/reflect/MagicAccessorImpl",
                 new String[]{"uk/co/rockstable/experiements/codegen/reflection/extractors/Extractor"});
 
-        {
-            mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
-            mv.visitCode();
-            mv.visitVarInsn(ALOAD, 0);
-            mv.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
-            mv.visitInsn(RETURN);
-            mv.visitMaxs(1, 1);
-            mv.visitEnd();
-        }
+        writeConstructor(cw);
+
         {
             mv = cw.visitMethod(ACC_PUBLIC, "extract", "(Ljava/lang/Object;)Ljava/lang/Object;", null, null);
             mv.visitCode();
@@ -77,6 +70,17 @@ public class MagicExtractorFactory extends ExtractorFactory {
         }
         cw.visitEnd();
         return cw.toByteArray();
+    }
+
+    private void writeConstructor(ClassWriter cw) {
+        MethodVisitor mv;
+        mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
+        mv.visitCode();
+        mv.visitVarInsn(ALOAD, 0);
+        mv.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
+        mv.visitInsn(RETURN);
+        mv.visitMaxs(1, 1);
+        mv.visitEnd();
     }
 
     private String generateClassName() {
