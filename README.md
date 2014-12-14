@@ -1,6 +1,6 @@
 codegen - Experimental Field Extractor
 =======
-A hacky approach to private field values extracting - 0% reflection, 100% running with scissors.
+A hacky approach to private fields values extracting - 0% reflection, 100% running with scissors.
 
 ### Example ###
 ```java
