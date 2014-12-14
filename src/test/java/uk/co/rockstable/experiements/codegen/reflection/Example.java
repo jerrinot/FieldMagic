@@ -1,8 +1,12 @@
-codegen - Experimental Field Extractor
-=======
-A hacky approach to extracting field values.
+package uk.co.rockstable.experiements.codegen.reflection;
 
-```
+import org.junit.Test;
+import uk.co.rockstable.experiements.codegen.reflection.extractors.Extractor;
+import uk.co.rockstable.experiements.codegen.reflection.extractors.ExtractorFactory;
+import uk.co.rockstable.experiements.codegen.reflection.func.domain.DomainObject;
+
+import static org.junit.Assert.*;
+
 public class Example {
 
     @Test
@@ -16,4 +20,3 @@ public class Example {
         assertEquals("hello world", extractedString);
     }
 }
-```
