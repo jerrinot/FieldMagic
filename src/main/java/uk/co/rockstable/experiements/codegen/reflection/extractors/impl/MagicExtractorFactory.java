@@ -89,7 +89,7 @@ public class MagicExtractorFactory extends ExtractorFactory {
 
     private void boxPrimitiveTypeIfNecessary(MethodVisitor mv, TypeDefinition fieldTypeEnum) {
         if (fieldTypeEnum.isPrimitive()) {
-            String boxingClass = fieldTypeEnum.getBoxingClass();
+            String boxingClass = fieldTypeEnum.getBoxingClassCode();
             String boxingMethodSignature = fieldTypeEnum.getBoxingMethodSignature();
             mv.visitMethodInsn(INVOKESTATIC, boxingClass, "valueOf", boxingMethodSignature, false);
         }

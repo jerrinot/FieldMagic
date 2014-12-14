@@ -1,40 +1,42 @@
 package uk.co.rockstable.experiements.codegen.reflection.extractors.impl;
 
 public enum TypeDefinition {
-    OBJECT(false, null, null, null),
-    INT(true, "I", "java/lang/Integer", Integer.TYPE),
-    BOOLEAN(true, "Z", "java/lang/Boolean", Boolean.TYPE),
-    CHAR(true, "C", "java/lang/Character", Character.TYPE),
-    BYTE(true, "B", "java/lang/Byte", Byte.TYPE),
-    SHORT(true, "S", "java/lang/Short", Short.TYPE),
-    LONG(true, "J", "java/lang/Long", Long.TYPE),
-    FLOAT(true, "F", "java/lang/Float", Float.TYPE),
-    DOUBLE(true, "D", "java/lang/Double", Double.TYPE);
+    //this represent any non-primitive value
+    OBJECT(null, null, null),
+
+    INT("I", "java/lang/Integer", Integer.TYPE),
+    BOOLEAN("Z", "java/lang/Boolean", Boolean.TYPE),
+    CHAR("C", "java/lang/Character", Character.TYPE),
+    BYTE("B", "java/lang/Byte", Byte.TYPE),
+    SHORT("S", "java/lang/Short", Short.TYPE),
+    LONG("J", "java/lang/Long", Long.TYPE),
+    FLOAT("F", "java/lang/Float", Float.TYPE),
+    DOUBLE("D", "java/lang/Double", Double.TYPE);
 
     private final boolean primitive;
     private final Class<?> primitiveClassName;
     private final String jvmPrimitiveTypeCode;
-    private final String boxingClass;
+    private final String boxingClassCode;
     private final String boxingMethodSignature;
 
-    private TypeDefinition(boolean primitive, String jvmPrimitiveTypeCode, String boxingClass, Class<?> primitiveClassName) {
-        this.primitive = primitive;
+    private TypeDefinition(String jvmPrimitiveTypeCode, String boxingClassCode, Class<?> primitiveClass) {
+        this.primitive = primitiveClass != null;
         this.jvmPrimitiveTypeCode = jvmPrimitiveTypeCode;
-        this.boxingClass = boxingClass;
+        this.boxingClassCode = boxingClassCode;
         if (primitive) {
-            boxingMethodSignature = "(" + jvmPrimitiveTypeCode + ")L" + boxingClass + ";";
+            boxingMethodSignature = "(" + jvmPrimitiveTypeCode + ")L" + boxingClassCode + ";";
         } else {
             boxingMethodSignature = null;
         }
-        this.primitiveClassName = primitiveClassName;
+        this.primitiveClassName = primitiveClass;
     }
 
     public boolean isPrimitive() {
         return primitive;
     }
 
-    public String getBoxingClass() {
-        return boxingClass;
+    public String getBoxingClassCode() {
+        return boxingClassCode;
     }
 
     public String getBoxingMethodSignature() {
