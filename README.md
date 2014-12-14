@@ -1,6 +1,8 @@
 codegen - Experimental Field Extractor
 =======
-A hacky approach to field values extracting.
+A hacky approach to private field values extracting - 0% reflection, 100% running with scissors.
+
+Thanks to [Chris](https://github.com/noctarius) and [Peter](https://github.com/peter-lawrey) for the idea!
 
 ```java
 public class DomainObject {
