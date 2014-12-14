@@ -18,13 +18,13 @@ public class MagicExtractorFactory extends ExtractorFactory {
     public Extractor create(Class<?> clazz, String fieldName) {
         try {
             Field field = clazz.getDeclaredField(fieldName);
-            return createMagicExtractorInstance(field);
+            return createMagicExtractorInstance(clazz, field);
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private Extractor createMagicExtractorInstance(Field field) {
+    private Extractor createMagicExtractorInstance(Class<?> clazz, Field field) {
         ClassWriter cw = new ClassWriter(0);
         MethodVisitor mv;
         final String generatedClassName = "uk/co/rockstable/experiements/codegen/reflection/GeneratedExtractor$" + ID.incrementAndGet();
@@ -57,10 +57,10 @@ public class MagicExtractorFactory extends ExtractorFactory {
 
         final byte[] impl = cw.toByteArray();
 
-        ClassLoader cl = UnsafeUtils.MAGIC_CLASS_LOADER;
-        Class clazz = UnsafeUtils.UNSAFE.defineClass(generatedClassName, impl, 0, impl.length, cl, null);
+        ClassLoader cl = clazz.getClassLoader();
+        Class generatedClass = UnsafeUtils.UNSAFE.defineClass(generatedClassName, impl, 0, impl.length, cl, null);
         try {
-            return (Extractor) clazz.newInstance();
+            return (Extractor) generatedClass.newInstance();
         } catch (InstantiationException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {

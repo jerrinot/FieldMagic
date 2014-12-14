@@ -5,7 +5,6 @@ import sun.misc.Unsafe;
 import java.lang.reflect.Field;
 
 public class UnsafeUtils {
-    public static final ClassLoader MAGIC_CLASS_LOADER = findMagicClassLoader();
     public static final Unsafe UNSAFE;
 
     static {
@@ -19,16 +18,4 @@ public class UnsafeUtils {
         }
     }
 
-    private static ClassLoader findMagicClassLoader() {
-        try {
-            Class<?> clazz = Class.forName("sun.reflect.ConstructorAccessor");
-            ClassLoader cl = clazz.getClassLoader();
-            if (cl == null) {
-                cl = ClassLoader.getSystemClassLoader();
-            }
-            return cl;
-        } catch (Throwable ignore) {
-        }
-        return null;
-    }
 }
