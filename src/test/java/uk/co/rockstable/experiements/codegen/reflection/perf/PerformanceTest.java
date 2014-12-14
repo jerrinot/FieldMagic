@@ -19,9 +19,10 @@ import uk.co.rockstable.experiements.codegen.reflection.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @State(Scope.Benchmark)
-public class ReflectionTest {
+public class PerformanceTest {
     private static final int NO_OF_OBJECTS = 100_000;
 
     @Param({"DIRECT", "REFLECTION", "MAGIC"})
@@ -32,15 +33,18 @@ public class ReflectionTest {
     private Extractor positionExtractor;
     private Extractor nameExtractor;
 
+    private DomainObject domainObject;
 
     @Setup
     public void setUp() {
         prepareData();
         createExtractors();
+
+        domainObject = RandomDomainObjectFactory.create();
     }
 
     @Benchmark
-    public int benchmark() {
+    public int benchmarkQueryLikeWorkload() {
         int hits = 0;
         for (DomainObject o : objects) {
             Long timestamp = (Long) timestampExtractor.extract(o);
@@ -54,12 +58,23 @@ public class ReflectionTest {
         return hits;
     }
 
+    @Benchmark
+    public String benchmarkStringExtraction() {
+        return (String)nameExtractor.extract(domainObject);
+    }
+
+    @Benchmark
+    public Integer benchmarkIntegerExtraction() {
+        return (Integer)positionExtractor.extract(domainObject);
+    }
+
     public static void main(String[] args) throws Exception{
-                Options opt = new OptionsBuilder().include(".*" + ReflectionTest.class.getSimpleName() + ".*")
+                Options opt = new OptionsBuilder().include(".*" + PerformanceTest.class.getSimpleName() + ".*")
                 .warmupIterations(10)
                 .measurementIterations(20)
                 .threads(1)
-                .forks(2)
+                .forks(1)
+                .timeUnit(TimeUnit.MICROSECONDS)
                 .build();
 
         new Runner(opt).run();
