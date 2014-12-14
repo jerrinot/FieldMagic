@@ -2,7 +2,7 @@ codegen - Experimental Field Extractor
 =======
 A hacky approach to field values extracting.
 
-```
+```java
 public class Example {
 
     @Test
