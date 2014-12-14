@@ -16,7 +16,7 @@ public class Example {
         Extractor nameExtractor = factory.create(DomainObject.class, "name");
         DomainObject domainObject = new DomainObject("hello world", 0);
 
-        String extractedString = (String) nameExtractor.extract(domainObject);
+        String extractedString = nameExtractor.extract(domainObject);
         assertEquals("hello world", extractedString);
     }
 }

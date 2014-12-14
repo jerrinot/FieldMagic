@@ -16,7 +16,7 @@ public class MagicExtractorTest {
         DomainObject domainObject = new DomainObject(generatedName, 0);
 
         Extractor extractor = new MagicExtractorFactory().create(DomainObject.class, "name");
-        String extractedName = (String) extractor.extract(domainObject);
+        String extractedName = extractor.extract(domainObject);
 
         assertEquals(generatedName, extractedName);
     }
@@ -26,7 +26,7 @@ public class MagicExtractorTest {
         DomainObject domainObject = new DomainObject(null, 0);
 
         Extractor extractor = new MagicExtractorFactory().create(DomainObject.class, "name");
-        String extractedName = (String) extractor.extract(domainObject);
+        String extractedName = extractor.extract(domainObject);
 
         assertEquals(null, extractedName);
     }
@@ -38,7 +38,7 @@ public class MagicExtractorTest {
         DomainObject domainObject = new DomainObject(null, Integer.MAX_VALUE);
 
         Extractor extractor = new MagicExtractorFactory().create(DomainObject.class, "id");
-        Integer extractedId = (Integer) extractor.extract(domainObject);
+        Integer extractedId = extractor.extract(domainObject);
 
         assertEquals((Integer)Integer.MAX_VALUE, extractedId);
     }
@@ -48,7 +48,7 @@ public class MagicExtractorTest {
         DomainObject domainObject = new DomainObject(null, 0);
 
         Extractor extractor = new MagicExtractorFactory().create(DomainObject.class, "_boolean");
-        Boolean extractedBool = (Boolean) extractor.extract(domainObject);
+        Boolean extractedBool = extractor.extract(domainObject);
 
         assertEquals(true, extractedBool);
     }
@@ -58,7 +58,7 @@ public class MagicExtractorTest {
         DomainObject domainObject = new DomainObject(null, 0);
 
         Extractor extractor = new MagicExtractorFactory().create(DomainObject.class, "_char");
-        Character extractedChar = (Character) extractor.extract(domainObject);
+        Character extractedChar = extractor.extract(domainObject);
 
         assertEquals((Character)Character.MAX_VALUE, extractedChar);
     }
@@ -68,7 +68,7 @@ public class MagicExtractorTest {
         DomainObject domainObject = new DomainObject(null, 0);
 
         Extractor extractor = new MagicExtractorFactory().create(DomainObject.class, "_byte");
-        Byte extractedByte = (Byte) extractor.extract(domainObject);
+        Byte extractedByte = extractor.extract(domainObject);
 
         assertEquals((Byte)Byte.MAX_VALUE, extractedByte);
     }
@@ -78,7 +78,7 @@ public class MagicExtractorTest {
         DomainObject domainObject = new DomainObject(null, 0);
 
         Extractor extractor = new MagicExtractorFactory().create(DomainObject.class, "_short");
-        Short extractedShort = (Short) extractor.extract(domainObject);
+        Short extractedShort = extractor.extract(domainObject);
 
         assertEquals((Short)Short.MAX_VALUE, extractedShort);
     }
@@ -88,7 +88,7 @@ public class MagicExtractorTest {
         DomainObject domainObject = new DomainObject(null, 0);
 
         Extractor extractor = new MagicExtractorFactory().create(DomainObject.class, "_long");
-        Long extractedLong = (Long) extractor.extract(domainObject);
+        Long extractedLong = extractor.extract(domainObject);
 
         assertEquals((Long)Long.MAX_VALUE, extractedLong);
     }
@@ -98,7 +98,7 @@ public class MagicExtractorTest {
         DomainObject domainObject = new DomainObject(null, 0);
 
         Extractor extractor = new MagicExtractorFactory().create(DomainObject.class, "_float");
-        Float extractedFloat = (Float) extractor.extract(domainObject);
+        Float extractedFloat = extractor.extract(domainObject);
 
         assertEquals((Float)Float.MAX_VALUE, extractedFloat);
     }
@@ -108,24 +108,20 @@ public class MagicExtractorTest {
         DomainObject domainObject = new DomainObject(null, 0);
 
         Extractor extractor = new MagicExtractorFactory().create(DomainObject.class, "_double");
-        Double extractedDouble = (Double) extractor.extract(domainObject);
+        Double extractedDouble = extractor.extract(domainObject);
 
         assertEquals((Double)Double.MAX_VALUE, extractedDouble);
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testExtractor_primitiveArraysAreNotSupported() {
-        DomainObject domainObject = new DomainObject(null, 0);
-
-        Extractor extractor = new MagicExtractorFactory().create(DomainObject.class, "primitiveIntArray");
+        new MagicExtractorFactory().create(DomainObject.class, "primitiveIntArray");
         fail();
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testExtractor_objectArraysAreNotSupported() {
-        DomainObject domainObject = new DomainObject(null, 0);
-
-        Extractor extractor = new MagicExtractorFactory().create(DomainObject.class, "integerArray");
+        new MagicExtractorFactory().create(DomainObject.class, "integerArray");
         fail();
     }
 

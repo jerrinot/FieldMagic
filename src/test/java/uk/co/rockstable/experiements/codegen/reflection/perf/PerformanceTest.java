@@ -47,9 +47,9 @@ public class PerformanceTest {
     public int benchmarkQueryLikeWorkload() {
         int hits = 0;
         for (DomainObject o : objects) {
-            Long timestamp = (Long) timestampExtractor.extract(o);
-            Integer position = (Integer) positionExtractor.extract(o);
-            String name = (String) nameExtractor.extract(o);
+            Long timestamp = timestampExtractor.extract(o);
+            Integer position = positionExtractor.extract(o);
+            String name = nameExtractor.extract(o);
 
             if (Utils.isEven(timestamp) && position == 0 && "foo".equals(name)) {
                 hits++;
@@ -60,12 +60,12 @@ public class PerformanceTest {
 
     @Benchmark
     public String benchmarkStringExtraction() {
-        return (String)nameExtractor.extract(domainObject);
+        return nameExtractor.extract(domainObject);
     }
 
     @Benchmark
     public Integer benchmarkIntegerExtraction() {
-        return (Integer)positionExtractor.extract(domainObject);
+        return positionExtractor.extract(domainObject);
     }
 
     public static void main(String[] args) throws Exception{

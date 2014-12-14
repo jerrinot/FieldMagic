@@ -26,8 +26,8 @@ public class Example {
 
         DomainObject domainObject = new DomainObject("hello world", 1);
 
-        String extractedString = (String) nameExtractor.extract(domainObject);
-        Integer extractedId = (Integer) idExtractor.extract(domainObject);
+        String extractedString = nameExtractor.extract(domainObject);
+        Integer extractedId = idExtractor.extract(domainObject);
 
         assertEquals("hello world", extractedString);
         assertEquals(1, extractedId);
