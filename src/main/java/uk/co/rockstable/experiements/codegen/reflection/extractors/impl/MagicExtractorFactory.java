@@ -25,15 +25,36 @@ public class MagicExtractorFactory extends ExtractorFactory {
     }
 
     private Extractor createMagicExtractorInstance(Class<?> clazz, Field field) {
+        final String generatedClassName = generateClassName();
+        final byte[] generatedBytecode = generateExtractorByteCode(field, generatedClassName);
+        ClassLoader cl = clazz.getClassLoader();
+        Class<?> generatedClass = UnsafeUtils.UNSAFE.defineClass(generatedClassName, generatedBytecode, 0, generatedBytecode.length, cl, null);
+        return createNewInstance(generatedClass);
+    }
+
+    private Extractor createNewInstance(Class<?> generatedClass) {
+        try {
+            return (Extractor) generatedClass.newInstance();
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private byte[] generateExtractorByteCode(Field field, String generatedClassName) {
+        String declaringClassName = field.getDeclaringClass().getName().replace('.', '/');
         ClassWriter cw = new ClassWriter(0);
         MethodVisitor mv;
-        final String generatedClassName = "uk/co/rockstable/experiements/codegen/reflection/GeneratedExtractor$" + ID.incrementAndGet();
-        String className = field.getDeclaringClass().getName().replace('.', '/');
+
         String fieldName = field.getName();
-        String fieldType = field.getType().getName().replace('.', '/');
+        Class<?> fieldTypeClass = field.getType();
+        TypeDefinition fieldTypeEnum = TypeDefinition.fromClass(fieldTypeClass);
+        String fieldTypeString = fieldTypeEnum.getFieldTypeString(fieldTypeClass);
 
         cw.visit(52, ACC_PUBLIC + ACC_SUPER, generatedClassName,
-                null, "sun/reflect/MagicAccessorImpl", new String[]{"uk/co/rockstable/experiements/codegen/reflection/extractors/Extractor"});
+                null, "sun/reflect/MagicAccessorImpl",
+                new String[]{"uk/co/rockstable/experiements/codegen/reflection/extractors/Extractor"});
 
         {
             mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
@@ -48,23 +69,25 @@ public class MagicExtractorFactory extends ExtractorFactory {
             mv = cw.visitMethod(ACC_PUBLIC, "extract", "(Ljava/lang/Object;)Ljava/lang/Object;", null, null);
             mv.visitCode();
             mv.visitVarInsn(ALOAD, 1);
-            mv.visitFieldInsn(GETFIELD, className, fieldName, "L" + fieldType + ";");
+            mv.visitFieldInsn(GETFIELD, declaringClassName, fieldName, fieldTypeString);
+            boxPrimitiveTypeIfNecessary(mv, fieldTypeEnum);
             mv.visitInsn(ARETURN);
             mv.visitMaxs(1, 2);
             mv.visitEnd();
         }
         cw.visitEnd();
+        return cw.toByteArray();
+    }
 
-        final byte[] impl = cw.toByteArray();
+    private String generateClassName() {
+        return "uk/co/rockstable/experiements/codegen/reflection/GeneratedExtractor$" + ID.incrementAndGet();
+    }
 
-        ClassLoader cl = clazz.getClassLoader();
-        Class generatedClass = UnsafeUtils.UNSAFE.defineClass(generatedClassName, impl, 0, impl.length, cl, null);
-        try {
-            return (Extractor) generatedClass.newInstance();
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
+    private void boxPrimitiveTypeIfNecessary(MethodVisitor mv, TypeDefinition fieldTypeEnum) {
+        if (fieldTypeEnum.isPrimitive()) {
+            String boxingClass = fieldTypeEnum.getBoxingClass();
+            String boxingMethodSignature = fieldTypeEnum.getBoxingMethodSignature();
+            mv.visitMethodInsn(INVOKESTATIC, boxingClass, "valueOf", boxingMethodSignature, false);
         }
     }
 }

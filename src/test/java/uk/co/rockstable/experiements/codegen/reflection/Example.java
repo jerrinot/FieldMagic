@@ -14,7 +14,7 @@ public class Example {
         ExtractorFactory factory = ExtractorFactory.newInstance(ExtractorFactory.Type.MAGIC);
 
         Extractor nameExtractor = factory.create(DomainObject.class, "name");
-        DomainObject domainObject = new DomainObject("hello world");
+        DomainObject domainObject = new DomainObject("hello world", 0);
 
         String extractedString = (String) nameExtractor.extract(domainObject);
         assertEquals("hello world", extractedString);
