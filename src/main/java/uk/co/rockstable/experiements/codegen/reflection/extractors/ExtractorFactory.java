@@ -23,7 +23,7 @@ public abstract class ExtractorFactory {
             default:
                 throw new IllegalArgumentException("Unknown ExtractFactory type " + type);
         }
-        return new CachingFactoryDecorator(factory);
+        return caching ? new CachingFactoryDecorator(factory) : factory;
     }
 
 
