@@ -13,6 +13,9 @@ public class DomainObject {
     public float _float = Float.MAX_VALUE;
     public double _double = Double.MAX_VALUE;
 
+    public int[] primitiveIntArray = new int[0];
+    public Integer[] integerArray = new Integer[0];
+
     public DomainObject(String name, int id) {
         this.name = name;
         this.id = id;

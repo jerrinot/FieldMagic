@@ -113,8 +113,20 @@ public class MagicExtractorTest {
         assertEquals((Double)Double.MAX_VALUE, extractedDouble);
     }
 
+    @Test(expected = UnsupportedOperationException.class)
+    public void testExtractor_primitiveArraysAreNotSupported() {
+        DomainObject domainObject = new DomainObject(null, 0);
 
+        Extractor extractor = new MagicExtractorFactory().create(DomainObject.class, "primitiveIntArray");
+        fail();
+    }
 
+    @Test(expected = UnsupportedOperationException.class)
+    public void testExtractor_objectArraysAreNotSupported() {
+        DomainObject domainObject = new DomainObject(null, 0);
 
+        Extractor extractor = new MagicExtractorFactory().create(DomainObject.class, "integerArray");
+        fail();
+    }
 
 }

@@ -57,6 +57,8 @@ public enum TypeDefinition {
                 }
             }
             throw new IllegalArgumentException("Unknown primitive class type: " + clazz);
+        } else if (clazz.isArray()) {
+            throw new UnsupportedOperationException("Arrays are not supported yet.");
         } else {
             return TypeDefinition.OBJECT;
         }
