@@ -1,6 +1,6 @@
 codegen - Experimental Field Extractor
 =======
-A hacky approach to extracting field values.
+A hacky approach to field values extracting.
 
 ```
 public class Example {
