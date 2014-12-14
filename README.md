@@ -1,4 +1,4 @@
-codegen - Experimental Field Extractor
+FieldMagic - (Very) Experimental Field Extractor
 =======
 A hacky approach to private fields values extracting - 0% reflection, 100% running with scissors.
 
