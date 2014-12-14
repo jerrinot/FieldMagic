@@ -1,4 +1,4 @@
-package uk.co.rockstable.experiements.codegen.reflection;
+package uk.co.rockstable.experiements.codegen.reflection.perf.domain;
 
 import org.apache.commons.lang3.RandomUtils;
 

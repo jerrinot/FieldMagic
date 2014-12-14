@@ -1,8 +1,8 @@
-package uk.co.rockstable.experiements.codegen.reflection;
+package uk.co.rockstable.experiements.codegen.reflection.perf.domain;
 
 public class DomainObject {
     public final Long timestamp;
-    public final int position;
+    public final Integer position;
     public final String name;
 
     public DomainObject(long timestamp, int position, String name) {

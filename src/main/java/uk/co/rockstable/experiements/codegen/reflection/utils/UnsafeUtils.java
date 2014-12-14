@@ -1,4 +1,4 @@
-package uk.co.rockstable.experiements.codegen;
+package uk.co.rockstable.experiements.codegen.reflection.utils;
 
 import sun.misc.Unsafe;
 
@@ -15,7 +15,7 @@ public class UnsafeUtils {
             theUnsafe.setAccessible(true);
             UNSAFE = (Unsafe) theUnsafe.get(null);
         } catch (Exception e) {
-            throw new AssertionError(e);
+            throw new IllegalStateException("Error while getting Unsafe", e);
         }
     }
 
