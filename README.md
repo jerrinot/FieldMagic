@@ -36,9 +36,9 @@ public class Example {
 ```
 
 ### Known Issues ###
-* Primitive values are always autoboxed. Support for extracting primitive type without boxing is the no. 1 item in my TODO list
+* Primitive values are always boxed to objects. Support for extracting primitive types without boxing is the no. 1 item in my TODO list.
 * No auto-detection if the the Magic is available.
-* Poor test coverage
+* Poor test coverage.
 
 ### Credits ###
 Thanks to [Chris](https://github.com/noctarius) and [Peter](https://github.com/peter-lawrey) for the idea!
