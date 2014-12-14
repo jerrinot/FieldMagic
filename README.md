@@ -2,8 +2,7 @@ codegen - Experimental Field Extractor
 =======
 A hacky approach to private field values extracting - 0% reflection, 100% running with scissors.
 
-Thanks to [Chris](https://github.com/noctarius) and [Peter](https://github.com/peter-lawrey) for the idea!
-
+### Example ###
 ```java
 public class DomainObject {
     private final String name;
@@ -30,7 +29,10 @@ public class Example {
 }
 ```
 
-Known Issues:
+### Known Issues ###
 * Primitive values cannot be extracted. That's no. 1 item of in my TODO list
 * Error-handling is virtually non-existing
 * Poor test coverage
+
+### Credits ###
+Thanks to [Chris](https://github.com/noctarius) and [Peter](https://github.com/peter-lawrey) for the idea!
