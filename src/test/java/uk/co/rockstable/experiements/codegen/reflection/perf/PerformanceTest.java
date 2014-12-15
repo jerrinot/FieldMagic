@@ -1,6 +1,7 @@
 package uk.co.rockstable.experiements.codegen.reflection.perf;
 
 import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
@@ -12,6 +13,7 @@ import uk.co.rockstable.experiements.codegen.reflection.extractors.Extractor;
 import uk.co.rockstable.experiements.codegen.reflection.extractors.ExtractorFactory;
 import uk.co.rockstable.experiements.codegen.reflection.extractors.impl.MagicExtractorFactory;
 import uk.co.rockstable.experiements.codegen.reflection.extractors.impl.ReflectionExtractorFactory;
+import uk.co.rockstable.experiements.codegen.reflection.extractors.impl.UnsafeExtractorFactory;
 import uk.co.rockstable.experiements.codegen.reflection.perf.direct.DirectExtractorFactory;
 import uk.co.rockstable.experiements.codegen.reflection.perf.domain.DomainObject;
 import uk.co.rockstable.experiements.codegen.reflection.perf.domain.RandomDomainObjectFactory;
@@ -25,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 public class PerformanceTest {
     private static final int NO_OF_OBJECTS = 100_000;
 
-    @Param({"DIRECT", "REFLECTION", "MAGIC"})
+    @Param({"DIRECT", "REFLECTION", "MAGIC", "UNSAFE"})
     private String type;
     private List<DomainObject> objects;
 
@@ -44,6 +46,7 @@ public class PerformanceTest {
     }
 
     @Benchmark
+    @OutputTimeUnit(TimeUnit.SECONDS)
     public int benchmarkQueryLikeWorkload() {
         int hits = 0;
         for (DomainObject o : objects) {
@@ -59,11 +62,13 @@ public class PerformanceTest {
     }
 
     @Benchmark
+    @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public String benchmarkStringExtraction() {
         return nameExtractor.extract(domainObject);
     }
 
     @Benchmark
+    @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public Integer benchmarkIntegerExtraction() {
         return positionExtractor.extract(domainObject);
     }
@@ -73,8 +78,7 @@ public class PerformanceTest {
                 .warmupIterations(10)
                 .measurementIterations(20)
                 .threads(1)
-                .forks(1)
-                .timeUnit(TimeUnit.MICROSECONDS)
+                .forks(2)
                 .build();
 
         new Runner(opt).run();
@@ -91,6 +95,9 @@ public class PerformanceTest {
                 break;
             case "MAGIC":
                 extractorFactory = new MagicExtractorFactory();
+                break;
+            case "UNSAFE":
+                extractorFactory = new UnsafeExtractorFactory();
                 break;
             default:
                 throw new IllegalArgumentException("Unknown extractor factory " + type);

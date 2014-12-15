@@ -5,6 +5,7 @@ import uk.co.rockstable.experiements.codegen.reflection.extractors.Extractor;
 import uk.co.rockstable.experiements.codegen.reflection.extractors.ExtractorFactory;
 import uk.co.rockstable.experiements.codegen.reflection.extractors.impl.MagicExtractorFactory;
 import uk.co.rockstable.experiements.codegen.reflection.extractors.impl.ReflectionExtractorFactory;
+import uk.co.rockstable.experiements.codegen.reflection.extractors.impl.UnsafeExtractorFactory;
 import uk.co.rockstable.experiements.codegen.reflection.func.domain.DomainObject;
 
 import static org.junit.Assert.assertEquals;
@@ -23,6 +24,12 @@ public class ExtractorFactoryTest {
     public void testNewInstance_reflection() {
         ExtractorFactory factory = ExtractorFactory.newInstance(ExtractorFactory.Type.REFLECTION, false);
         assertEquals(ReflectionExtractorFactory.class, factory.getClass());
+    }
+
+    @Test
+    public void testNewInstance_unsafe() {
+        ExtractorFactory factory = ExtractorFactory.newInstance(ExtractorFactory.Type.UNSAFE, false);
+        assertEquals(UnsafeExtractorFactory.class, factory.getClass());
     }
 
     @Test

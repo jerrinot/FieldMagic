@@ -3,6 +3,7 @@ package uk.co.rockstable.experiements.codegen.reflection.extractors;
 import uk.co.rockstable.experiements.codegen.reflection.extractors.impl.CachingFactoryDecorator;
 import uk.co.rockstable.experiements.codegen.reflection.extractors.impl.MagicExtractorFactory;
 import uk.co.rockstable.experiements.codegen.reflection.extractors.impl.ReflectionExtractorFactory;
+import uk.co.rockstable.experiements.codegen.reflection.extractors.impl.UnsafeExtractorFactory;
 
 public abstract class ExtractorFactory {
     public abstract Extractor create(Class<?> clazz, String field);
@@ -20,6 +21,9 @@ public abstract class ExtractorFactory {
             case REFLECTION:
                 factory = new ReflectionExtractorFactory();
                 break;
+            case UNSAFE:
+                factory = new UnsafeExtractorFactory();
+                break;
             default:
                 throw new IllegalArgumentException("Unknown ExtractFactory type " + type);
         }
@@ -29,6 +33,7 @@ public abstract class ExtractorFactory {
 
     public static enum Type {
         MAGIC,
-        REFLECTION
+        REFLECTION,
+        UNSAFE
     }
 }
