@@ -35,6 +35,28 @@ public class Example {
 }
 ```
 
+### Why ###
+But I can! Here are some numbers based in [this](https://github.com/jerrinot/FieldMagic/blob/baeba79327b22fc858880392015ae96d6e55d9d4/src/test/java/uk/co/rockstable/experiements/codegen/reflection/perf/PerformanceTest.java) test:
+```
+Benchmark                                                       (type)   Mode  Samples     Score    Error   Units
+u.c.r.e.c.r.p.PerformanceTest.benchmarkIntegerExtraction        DIRECT  thrpt       40   356.823 ±  3.781  ops/us
+u.c.r.e.c.r.p.PerformanceTest.benchmarkIntegerExtraction    REFLECTION  thrpt       40   141.894 ±  3.747  ops/us
+u.c.r.e.c.r.p.PerformanceTest.benchmarkIntegerExtraction         MAGIC  thrpt       40   356.025 ±  1.877  ops/us
+u.c.r.e.c.r.p.PerformanceTest.benchmarkIntegerExtraction        UNSAFE  thrpt       40   318.227 ±  1.145  ops/us
+
+u.c.r.e.c.r.p.PerformanceTest.benchmarkQueryLikeWorkload        DIRECT  thrpt       40  1428.623 ±  8.243   ops/s
+u.c.r.e.c.r.p.PerformanceTest.benchmarkQueryLikeWorkload    REFLECTION  thrpt       40   511.562 ± 11.229   ops/s
+u.c.r.e.c.r.p.PerformanceTest.benchmarkQueryLikeWorkload         MAGIC  thrpt       40  1450.806 ± 20.139   ops/s
+u.c.r.e.c.r.p.PerformanceTest.benchmarkQueryLikeWorkload        UNSAFE  thrpt       40  1078.089 ± 22.838   ops/s
+
+u.c.r.e.c.r.p.PerformanceTest.benchmarkStringExtraction         DIRECT  thrpt       40   355.263 ±  5.818  ops/us
+u.c.r.e.c.r.p.PerformanceTest.benchmarkStringExtraction     REFLECTION  thrpt       40   142.848 ±  2.002  ops/us
+u.c.r.e.c.r.p.PerformanceTest.benchmarkStringExtraction          MAGIC  thrpt       40   357.490 ±  2.528  ops/us
+u.c.r.e.c.r.p.PerformanceTest.benchmarkStringExtraction         UNSAFE  thrpt       40   315.061 ±  5.595  ops/us
+```
+Apparently the Magic method is even faster than Unsafe.getXXX(object, offset). I was quite surprised by this finding as I expected Unsafe to be the fastest method. 
+
+
 ### Known Issues ###
 * Primitive values are always boxed to objects. Support for extracting primitive types without boxing is the no. 1 item in my TODO list.
 * Arrays are not supported.
