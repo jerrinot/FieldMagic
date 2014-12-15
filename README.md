@@ -60,7 +60,7 @@ Apparently the Magic method is even faster than Unsafe.getXXX(object, offset). I
 ### Known Issues ###
 * Primitive values are always boxed to objects. Support for extracting primitive types without boxing is the no. 1 item in my TODO list.
 * Arrays are not supported.
-* No auto-detection if the the Magic is available.
+* No auto-detection if the Magic is available.
 * Poor test coverage.
 
 ### Credits ###
