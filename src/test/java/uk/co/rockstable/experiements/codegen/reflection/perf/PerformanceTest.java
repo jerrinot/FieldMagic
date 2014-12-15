@@ -17,6 +17,7 @@ import uk.co.rockstable.experiements.codegen.reflection.extractors.impl.UnsafeEx
 import uk.co.rockstable.experiements.codegen.reflection.perf.direct.DirectExtractorFactory;
 import uk.co.rockstable.experiements.codegen.reflection.perf.domain.DomainObject;
 import uk.co.rockstable.experiements.codegen.reflection.perf.domain.RandomDomainObjectFactory;
+import uk.co.rockstable.experiements.codegen.reflection.perf.reflectasm.ReflectasmExtractorFactory;
 import uk.co.rockstable.experiements.codegen.reflection.utils.Utils;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 public class PerformanceTest {
     private static final int NO_OF_OBJECTS = 100_000;
 
-    @Param({"DIRECT", "REFLECTION", "MAGIC", "UNSAFE"})
+    @Param({"DIRECT", "REFLECTION", "MAGIC", "UNSAFE", "REFLACTASM"})
     private String type;
     private List<DomainObject> objects;
 
@@ -74,7 +75,7 @@ public class PerformanceTest {
     }
 
     public static void main(String[] args) throws Exception{
-                Options opt = new OptionsBuilder().include(".*" + PerformanceTest.class.getSimpleName() + ".*")
+        Options opt = new OptionsBuilder().include(".*" + PerformanceTest.class.getSimpleName() + ".*")
                 .warmupIterations(10)
                 .measurementIterations(20)
                 .threads(1)
@@ -97,6 +98,9 @@ public class PerformanceTest {
                 break;
             case "UNSAFE":
                 extractorFactory = new UnsafeExtractorFactory();
+                break;
+            case "REFLACTASM":
+                extractorFactory = new ReflectasmExtractorFactory();
                 break;
             default:
                 throw new IllegalArgumentException("Unknown extractor factory " + type);

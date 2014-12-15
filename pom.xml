@@ -13,6 +13,7 @@
         <jmh.version>1.3.4</jmh.version>
         <commons-lang.version>3.3.2</commons-lang.version>
         <junit.version>4.11</junit.version>
+        <reflectasm.version>1.09</reflectasm.version>
     </properties>
 
     <dependencies>
@@ -47,6 +48,13 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esotericsoftware.reflectasm</groupId>
+            <artifactId>reflectasm</artifactId>
+            <version>${reflectasm.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
