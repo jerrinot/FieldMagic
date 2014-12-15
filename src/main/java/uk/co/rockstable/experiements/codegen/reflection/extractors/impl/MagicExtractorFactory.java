@@ -15,7 +15,7 @@ public class MagicExtractorFactory extends ExtractorFactory {
     private static AtomicInteger ID = new AtomicInteger();
 
 
-    public Extractor create(Class<?> clazz, String fieldName) {
+    public <T> Extractor<T> create(Class<T> clazz, String fieldName) {
         try {
             Field field = clazz.getDeclaredField(fieldName);
             return createMagicExtractorInstance(clazz, field);
@@ -24,15 +24,15 @@ public class MagicExtractorFactory extends ExtractorFactory {
         }
     }
 
-    private Extractor createMagicExtractorInstance(Class<?> clazz, Field field) {
+    private <T> Extractor<T> createMagicExtractorInstance(Class<T> clazz, Field field) {
         final String generatedClassName = generateClassName();
         final byte[] generatedBytecode = generateExtractorByteCode(field, generatedClassName);
         ClassLoader cl = clazz.getClassLoader();
-        Class<?> generatedClass = UnsafeUtils.UNSAFE.defineClass(generatedClassName, generatedBytecode, 0, generatedBytecode.length, cl, null);
+        Class<T> generatedClass = (Class<T>) UnsafeUtils.UNSAFE.defineClass(generatedClassName, generatedBytecode, 0, generatedBytecode.length, cl, null);
         return createNewInstance(generatedClass);
     }
 
-    private Extractor createNewInstance(Class<?> generatedClass) {
+    private <T> Extractor<T> createNewInstance(Class<T> generatedClass) {
         try {
             return (Extractor) generatedClass.newInstance();
         } catch (InstantiationException e) {

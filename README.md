@@ -21,8 +21,8 @@ public class Example {
     @Test
     public void basicExample() {
         ExtractorFactory factory = ExtractorFactory.newInstance(ExtractorFactory.Type.MAGIC);
-        Extractor nameExtractor = factory.create(DomainObject.class, "name");
-        Extractor idExtractor = factory.create(DomainObject.class, "id");
+        Extractor<DomainObject> nameExtractor = factory.create(DomainObject.class, "name");
+        Extractor<DomainObject> idExtractor = factory.create(DomainObject.class, "id");
 
         DomainObject domainObject = new DomainObject("hello world", 1);
 

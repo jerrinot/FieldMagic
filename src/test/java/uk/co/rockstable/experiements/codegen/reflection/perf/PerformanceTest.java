@@ -31,9 +31,9 @@ public class PerformanceTest {
     private String type;
     private List<DomainObject> objects;
 
-    private Extractor timestampExtractor;
-    private Extractor positionExtractor;
-    private Extractor nameExtractor;
+    private Extractor<DomainObject> timestampExtractor;
+    private Extractor<DomainObject> positionExtractor;
+    private Extractor<DomainObject> nameExtractor;
 
     private DomainObject domainObject;
 
@@ -80,7 +80,6 @@ public class PerformanceTest {
                 .threads(1)
                 .forks(2)
                 .build();
-
         new Runner(opt).run();
     }
 

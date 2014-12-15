@@ -6,7 +6,7 @@ import uk.co.rockstable.experiements.codegen.reflection.extractors.impl.Reflecti
 import uk.co.rockstable.experiements.codegen.reflection.extractors.impl.UnsafeExtractorFactory;
 
 public abstract class ExtractorFactory {
-    public abstract Extractor create(Class<?> clazz, String field);
+    public abstract <T> Extractor<T> create(Class<T> clazz, String field);
 
     public static ExtractorFactory newInstance(Type type) {
         return newInstance(type, true);

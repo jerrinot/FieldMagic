@@ -45,7 +45,7 @@ public class GenericExtractorTest {
         String generatedName = RandomStringUtils.randomAlphanumeric(10);
         DomainObject domainObject = new DomainObject(generatedName, 0);
 
-        Extractor extractor = factory.create(DomainObject.class, "name");
+        Extractor<DomainObject> extractor = factory.create(DomainObject.class, "name");
         String extractedName = extractor.extract(domainObject);
 
         assertEquals(generatedName, extractedName);
@@ -55,7 +55,7 @@ public class GenericExtractorTest {
     public void testExtractor_nullStillWorks() {
         DomainObject domainObject = new DomainObject(null, 0);
 
-        Extractor extractor = factory.create(DomainObject.class, "name");
+        Extractor<DomainObject> extractor = factory.create(DomainObject.class, "name");
         String extractedName = extractor.extract(domainObject);
 
         assertEquals(null, extractedName);
@@ -67,7 +67,7 @@ public class GenericExtractorTest {
     public void testExtractor_autoboxingInt() {
         DomainObject domainObject = new DomainObject(null, Integer.MAX_VALUE);
 
-        Extractor extractor = factory.create(DomainObject.class, "id");
+        Extractor<DomainObject> extractor = factory.create(DomainObject.class, "id");
         Integer extractedId = extractor.extract(domainObject);
 
         assertEquals((Integer)Integer.MAX_VALUE, extractedId);
@@ -77,7 +77,7 @@ public class GenericExtractorTest {
     public void testExtractor_autoboxingBool() {
         DomainObject domainObject = new DomainObject(null, 0);
 
-        Extractor extractor = factory.create(DomainObject.class, "_boolean");
+        Extractor<DomainObject> extractor = factory.create(DomainObject.class, "_boolean");
         Boolean extractedBool = extractor.extract(domainObject);
 
         assertEquals(true, extractedBool);
@@ -87,7 +87,7 @@ public class GenericExtractorTest {
     public void testExtractor_autoboxingChar() {
         DomainObject domainObject = new DomainObject(null, 0);
 
-        Extractor extractor = factory.create(DomainObject.class, "_char");
+        Extractor<DomainObject> extractor = factory.create(DomainObject.class, "_char");
         Character extractedChar = extractor.extract(domainObject);
 
         assertEquals((Character)Character.MAX_VALUE, extractedChar);
@@ -97,7 +97,7 @@ public class GenericExtractorTest {
     public void testExtractor_autoboxingByte() {
         DomainObject domainObject = new DomainObject(null, 0);
 
-        Extractor extractor = factory.create(DomainObject.class, "_byte");
+        Extractor<DomainObject> extractor = factory.create(DomainObject.class, "_byte");
         Byte extractedByte = extractor.extract(domainObject);
 
         assertEquals((Byte)Byte.MAX_VALUE, extractedByte);
@@ -107,7 +107,7 @@ public class GenericExtractorTest {
     public void testExtractor_autoboxingShort() {
         DomainObject domainObject = new DomainObject(null, 0);
 
-        Extractor extractor = factory.create(DomainObject.class, "_short");
+        Extractor<DomainObject> extractor = factory.create(DomainObject.class, "_short");
         Short extractedShort = extractor.extract(domainObject);
 
         assertEquals((Short)Short.MAX_VALUE, extractedShort);
@@ -117,7 +117,7 @@ public class GenericExtractorTest {
     public void testExtractor_autoboxingLong() {
         DomainObject domainObject = new DomainObject(null, 0);
 
-        Extractor extractor = factory.create(DomainObject.class, "_long");
+        Extractor<DomainObject> extractor = factory.create(DomainObject.class, "_long");
         Long extractedLong = extractor.extract(domainObject);
 
         assertEquals((Long)Long.MAX_VALUE, extractedLong);
@@ -127,7 +127,7 @@ public class GenericExtractorTest {
     public void testExtractor_autoboxingFloat() {
         DomainObject domainObject = new DomainObject(null, 0);
 
-        Extractor extractor = factory.create(DomainObject.class, "_float");
+        Extractor<DomainObject> extractor = factory.create(DomainObject.class, "_float");
         Float extractedFloat = extractor.extract(domainObject);
 
         assertEquals((Float)Float.MAX_VALUE, extractedFloat);
@@ -137,7 +137,7 @@ public class GenericExtractorTest {
     public void testExtractor_autoboxingDouble() {
         DomainObject domainObject = new DomainObject(null, 0);
 
-        Extractor extractor = factory.create(DomainObject.class, "_double");
+        Extractor<DomainObject> extractor = factory.create(DomainObject.class, "_double");
         Double extractedDouble = extractor.extract(domainObject);
 
         assertEquals((Double)Double.MAX_VALUE, extractedDouble);

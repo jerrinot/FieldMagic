@@ -6,7 +6,7 @@ import uk.co.rockstable.experiements.codegen.reflection.perf.domain.DomainObject
 
 public class DirectExtractorFactory extends ExtractorFactory {
 
-    public Extractor create(Class<?> clazz, String field) {
+    public <T> Extractor<T> create(Class<T> clazz, String field) {
         if (!DomainObject.class.equals(clazz)) {
             throw new IllegalArgumentException("Unknown class " + clazz);
         }

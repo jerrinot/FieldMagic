@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
 public class ReflectionExtractorFactory extends ExtractorFactory {
 
     @Override
-    public Extractor create(Class<?> clazz, String field) {
+    public <T> Extractor<T> create(Class<T> clazz, String field) {
         return new ReflectionExtractor(clazz, field);
     }
 

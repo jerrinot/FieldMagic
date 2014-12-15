@@ -13,7 +13,7 @@ public class Example {
     public void basicExample() {
         ExtractorFactory factory = ExtractorFactory.newInstance(ExtractorFactory.Type.MAGIC);
 
-        Extractor nameExtractor = factory.create(DomainObject.class, "name");
+        Extractor<DomainObject> nameExtractor = factory.create(DomainObject.class, "name");
         DomainObject domainObject = new DomainObject("hello world", 0);
 
         String extractedString = nameExtractor.extract(domainObject);

@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
 public class UnsafeExtractorFactory extends ExtractorFactory {
 
     @Override
-    public Extractor create(Class<?> clazz, String fieldName) {
+    public <T> Extractor<T> create(Class<T> clazz, String fieldName) {
         try {
             Field field = clazz.getDeclaredField(fieldName);
             return createExtractor(field);
@@ -52,7 +52,7 @@ public class UnsafeExtractorFactory extends ExtractorFactory {
         }
     }
 
-    public static final class DoubleExtractor implements Extractor {
+    public static final class DoubleExtractor<T> implements Extractor<T> {
         private final long offset;
 
         public DoubleExtractor(Field field) {
@@ -60,12 +60,13 @@ public class UnsafeExtractorFactory extends ExtractorFactory {
         }
 
         @Override
-        public <T> T extract(Object o) {
-            return (T)(Object)UnsafeUtils.UNSAFE.getDouble(o, offset);
+        public <R> R extract(T o) {
+            return (R)(Object)UnsafeUtils.UNSAFE.getDouble(o, offset);
         }
+
     }
 
-    public static final class FloatExtractor implements Extractor {
+    public static final class FloatExtractor<T> implements Extractor<T> {
         private final long offset;
 
         public FloatExtractor(Field field) {
@@ -73,12 +74,12 @@ public class UnsafeExtractorFactory extends ExtractorFactory {
         }
 
         @Override
-        public <T> T extract(Object o) {
-            return (T)(Object)UnsafeUtils.UNSAFE.getFloat(o, offset);
+        public <R> R extract(T o) {
+            return (R)(Object)UnsafeUtils.UNSAFE.getFloat(o, offset);
         }
     }
 
-    public static final class LongExtractor implements Extractor {
+    public static final class LongExtractor<T> implements Extractor<T> {
         private final long offset;
 
         public LongExtractor(Field field) {
@@ -86,12 +87,12 @@ public class UnsafeExtractorFactory extends ExtractorFactory {
         }
 
         @Override
-        public <T> T extract(Object o) {
-            return (T)(Object)UnsafeUtils.UNSAFE.getLong(o, offset);
+        public <R> R extract(T o) {
+            return (R)(Object)UnsafeUtils.UNSAFE.getLong(o, offset);
         }
     }
 
-    public static final class ShortExtractor implements Extractor {
+    public static final class ShortExtractor<T> implements Extractor<T> {
         private final long offset;
 
         public ShortExtractor(Field field) {
@@ -99,12 +100,12 @@ public class UnsafeExtractorFactory extends ExtractorFactory {
         }
 
         @Override
-        public <T> T extract(Object o) {
-            return (T)(Object)UnsafeUtils.UNSAFE.getShort(o, offset);
+        public <R> R extract(T o) {
+            return (R)(Object)UnsafeUtils.UNSAFE.getShort(o, offset);
         }
     }
 
-    public static final class ByteExtractor implements Extractor {
+    public static final class ByteExtractor<T> implements Extractor<T> {
         private final long offset;
 
         public ByteExtractor(Field field) {
@@ -112,12 +113,12 @@ public class UnsafeExtractorFactory extends ExtractorFactory {
         }
 
         @Override
-        public <T> T extract(Object o) {
-            return (T)(Object)UnsafeUtils.UNSAFE.getByte(o, offset);
+        public <R> R extract(T o) {
+            return (R)(Object)UnsafeUtils.UNSAFE.getByte(o, offset);
         }
     }
 
-    public static final class CharExtractor implements Extractor {
+    public static final class CharExtractor<T> implements Extractor<T> {
         private final long offset;
 
         public CharExtractor(Field field) {
@@ -125,13 +126,13 @@ public class UnsafeExtractorFactory extends ExtractorFactory {
         }
 
         @Override
-        public <T> T extract(Object o) {
-            return (T)(Object)UnsafeUtils.UNSAFE.getChar(o, offset);
+        public <R> R extract(T o) {
+            return (R)(Object)UnsafeUtils.UNSAFE.getChar(o, offset);
         }
     }
 
 
-    public static final class BooleanExtractor implements Extractor {
+    public static final class BooleanExtractor<T> implements Extractor<T> {
         private final long offset;
 
         public BooleanExtractor(Field field) {
@@ -139,12 +140,12 @@ public class UnsafeExtractorFactory extends ExtractorFactory {
         }
 
         @Override
-        public <T> T extract(Object o) {
-            return (T)(Object)UnsafeUtils.UNSAFE.getBoolean(o, offset);
+        public <R> R extract(T o) {
+            return (R)(Object)UnsafeUtils.UNSAFE.getBoolean(o, offset);
         }
     }
 
-    public static final class IntExtractor implements Extractor {
+    public static final class IntExtractor<T> implements Extractor<T> {
         private final long offset;
 
         public IntExtractor(Field field) {
@@ -152,12 +153,12 @@ public class UnsafeExtractorFactory extends ExtractorFactory {
         }
 
         @Override
-        public <T> T extract(Object o) {
-            return (T)(Object)UnsafeUtils.UNSAFE.getInt(o, offset);
+        public <R> R extract(T o) {
+            return (R)(Object)UnsafeUtils.UNSAFE.getInt(o, offset);
         }
     }
 
-    private static final class ObjectExtractor implements Extractor {
+    private static final class ObjectExtractor<T> implements Extractor<T> {
         private final long offset;
 
         private ObjectExtractor(Field field) {
@@ -165,8 +166,8 @@ public class UnsafeExtractorFactory extends ExtractorFactory {
         }
 
         @Override
-        public <T> T extract(Object o) {
-            return (T) UnsafeUtils.UNSAFE.getObject(o, offset);
+        public <R> R extract(T o) {
+            return (R) UnsafeUtils.UNSAFE.getObject(o, offset);
         }
     }
 }

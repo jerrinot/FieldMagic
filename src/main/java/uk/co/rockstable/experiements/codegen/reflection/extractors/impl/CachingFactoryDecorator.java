@@ -16,7 +16,7 @@ public class CachingFactoryDecorator extends ExtractorFactory {
     }
 
     @Override
-    public Extractor create(Class<?> clazz, String field) {
+    public <T> Extractor<T> create(Class<T> clazz, String field) {
         ConcurrentMap<String, Extractor> classCache = cache.get(clazz);
         if (classCache == null) {
             classCache = cache.computeIfAbsent(clazz, (ignored) -> new ConcurrentHashMap<>() );
